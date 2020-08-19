@@ -82,6 +82,7 @@ export default class ImageBuilder {
 
             console.log("Attempting to check Microsoft.VirtualMachineImages provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
+            console.log("outStream = " + outStream);
             console.log("Checked Microsoft.VirtualMachineImages provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
                 await this.executeAzCliCommand("provider register -n Microsoft.VirtualMachineImages");
