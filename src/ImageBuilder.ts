@@ -79,16 +79,22 @@ export default class ImageBuilder {
                     this.sleepFor(1);
                 }
             }
-            outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
+
+            console.log("Attempting to check Microsoft.VirtualMachineImages provider registration");
+            outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
+            console.log("Checked Microsoft.VirtualMachineImages provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
                 await this.executeAzCliCommand("provider register -n Microsoft.VirtualMachineImages");
                 this.sleepFor(1);
-                outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
+                outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
                 while (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
-                    outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
+                    outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
                 }
             }
+
+            console.log("Attempting to check Microsoft.Storage provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.Storage`);
+            console.log("Checked Microsoft.Storage provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                 console.log("Register Microsoft.Storage");
                 await this.executeAzCliCommand("provider register -n Microsoft.Storage");
@@ -98,7 +104,10 @@ export default class ImageBuilder {
                     outStream = await this.executeAzCliCommand(`provider show -n Microsoft.Storage`);
                 }
             }
+
+            console.log("Attempting to check Microsoft.Compute provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.Compute`);
+            console.log("Checked Microsoft.Compute provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                 console.log("Register Microsoft.Compute");
                 await this.executeAzCliCommand("provider register -n Microsoft.Compute");
@@ -108,7 +117,10 @@ export default class ImageBuilder {
                     outStream = await this.executeAzCliCommand(`provider show -n Microsoft.Compute`);
                 }
             }
+
+            console.log("Attempting to check Microsoft.KeyVault provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.KeyVault`);
+            console.log("Checked Microsoft.KeyVault provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                 console.log("Register Microsoft.KeyVault");
                 await this.executeAzCliCommand("provider register -n Microsoft.KeyVault");
