@@ -50,7 +50,7 @@ jobs:
       uses: ./
       with:
         location: 'westus'
-        #resourceGroupName: 'rg_aib_action_1597077618408'
+        resourceGroupName: 'rg_aib_action_1597843153463'
         #resourceGroupName: 'aibResourceGroupLin'
         #resourceGroupName: 'aibResourceGroupMG'
         #resourceGroupName: 'rg_aib_action_1597591645408'
