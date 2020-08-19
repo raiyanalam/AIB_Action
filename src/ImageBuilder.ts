@@ -133,7 +133,7 @@ export default class ImageBuilder {
                 }
             }
 
-            console.log("Checked all registrations");
+            console.log("Checked all registrations Microsoft.KeyVault,storage,compute");
 
             this.sleepFor(3);
 
@@ -143,6 +143,7 @@ export default class ImageBuilder {
             console.log("ran account show");
             var subscriptionId = JSON.parse(`${outStream}`).id.toString();
             console.log("subs id"+subscriptionId);
+            console.log("create resource group ");
             if (this._taskParameters.resourceGroupName == null || this._taskParameters.resourceGroupName == undefined || this._taskParameters.resourceGroupName.length == 0) {
                 var resourceGroupName = Util.format('%s%s', constants.resourceGroupName, getCurrentTime());
                 this._taskParameters.resourceGroupName = resourceGroupName;
