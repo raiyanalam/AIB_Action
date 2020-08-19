@@ -147,7 +147,9 @@ export default class ImageBuilder {
                 var resourceGroupName = Util.format('%s%s', constants.resourceGroupName, getCurrentTime());
                 this._taskParameters.resourceGroupName = resourceGroupName;
                 console.log("Trying to create a new resource group: " + resourceGroupName);
-                await this.executeAzCliCommand(`group create -n ${resourceGroupName} -l ${this._taskParameters.location}`);
+                output = await this.executeAzCliCommand(`group create -n ${resourceGroupName} -l ${this._taskParameters.location}`);
+                this.sleepFor(1);
+                console.log("output of resource creation "+output);
                 console.log("resource group " + resourceGroupName + " got created");
             }
             console.log(creating role definition");
@@ -415,6 +417,7 @@ export default class ImageBuilder {
 
     async executeAzCliCommand(command: string, options?: any): Promise<string> {
         var outStream: string = '';
+        console.log("command "+command);
         var execOptions: any = {
             outStream: new NullOutstreamStringWritable({ decodeStrings: false }),
             listeners: {
