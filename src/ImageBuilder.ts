@@ -66,7 +66,6 @@ export default class ImageBuilder {
             //Register all features for Azure Image Builder Service
             console.log("Attempting to check Microsoft.VirtualMachineImages feature installation");
             outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
-            console.log("outStream = " + outStream);
             console.log("Checked Microsoft.VirtualMachineImages feature installation");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).properties.state, "Registered")) {
                 console.log("Register Microsoft.VirtualMachineImages");
@@ -83,7 +82,6 @@ export default class ImageBuilder {
 
             console.log("Attempting to check Microsoft.VirtualMachineImages provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
-            console.log("outStream = " + outStream);
             console.log("Checked Microsoft.VirtualMachineImages provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                 await this.executeAzCliCommand("provider register -n Microsoft.VirtualMachineImages");
@@ -122,7 +120,6 @@ export default class ImageBuilder {
 
             console.log("Attempting to check Microsoft.KeyVault provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.KeyVault`);
-            console.log("outStream = " + outStream);
             console.log("Checked Microsoft.KeyVault provider registration");
             if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).registrationState, "Registered")) {
                 console.log("First check for registration failed");    
@@ -145,7 +142,7 @@ export default class ImageBuilder {
             console.log("account show outstream = " + outStream);
             console.log("ran account show");
             var subscriptionId = JSON.parse(`${outStream}`).id.toString();
-
+            console.log("subs id"+subscriptionId);
             if (this._taskParameters.resourceGroupName == null || this._taskParameters.resourceGroupName == undefined || this._taskParameters.resourceGroupName.length == 0) {
                 var resourceGroupName = Util.format('%s%s', constants.resourceGroupName, getCurrentTime());
                 this._taskParameters.resourceGroupName = resourceGroupName;
@@ -153,7 +150,7 @@ export default class ImageBuilder {
                 await this.executeAzCliCommand(`group create -n ${resourceGroupName} -l ${this._taskParameters.location}`);
                 console.log("resource group " + resourceGroupName + " got created");
             }
-
+            console.log(creating role definition");
             //template json for role definition 
             imageRoleDefName = "aibImageDef" + getCurrentTime();
             var templateRoleDefinition = `{
@@ -426,7 +423,7 @@ export default class ImageBuilder {
         };
         try {
             await exec.exec(`"${azPath}" ${command}`, [], execOptions);
-            //console.log(outStream);
+            console.log(outStream);
             return outStream;
         }
         catch (error) {
