@@ -68,13 +68,13 @@ export default class ImageBuilder {
             outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
             console.log("outStream = " + outStream);
             console.log("Checked Microsoft.VirtualMachineImages feature installation");
-            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).registrationState, "Registered")) {
+            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).properties.state, "Registered")) {
                 console.log("Register Microsoft.VirtualMachineImages");
                 await this.executeAzCliCommand("feature register --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview");
                 console.log("Attempting to register Microsoft.VirtualMachineImages feature");
                 this.sleepFor(1);
                 outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
-                while (!Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
+                while (!Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
                     console.log("Attempting to register Microsoft.VirtualMachineImages feature in loop");
                     outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
                     this.sleepFor(1);
