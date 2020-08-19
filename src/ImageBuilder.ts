@@ -66,8 +66,9 @@ export default class ImageBuilder {
             //Register all features for Azure Image Builder Service
             console.log("Attempting to check Microsoft.VirtualMachineImages feature installation");
             outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
+            console.log("outStream = " + outStream);
             console.log("Checked Microsoft.VirtualMachineImages feature installation");
-            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
+            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).registrationState, "Registered")) {
                 console.log("Register Microsoft.VirtualMachineImages");
                 await this.executeAzCliCommand("feature register --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview");
                 console.log("Attempting to register Microsoft.VirtualMachineImages feature");
