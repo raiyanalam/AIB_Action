@@ -67,13 +67,13 @@ export default class ImageBuilder {
             console.log("Attempting to check Microsoft.VirtualMachineImages feature installation");
             outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
             console.log("Checked Microsoft.VirtualMachineImages feature installation");
-            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
+            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                 console.log("Register Microsoft.VirtualMachineImages");
                 await this.executeAzCliCommand("feature register --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview");
                 console.log("Attempting to register Microsoft.VirtualMachineImages feature");
                 this.sleepFor(1);
                 outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
-                while (!Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
+                while (!Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                     console.log("Attempting to register Microsoft.VirtualMachineImages feature in loop");
                     outStream = await this.executeAzCliCommand(`feature show --namespace Microsoft.VirtualMachineImages --name VirtualMachineTemplatePreview`);
                     this.sleepFor(1);
@@ -84,11 +84,11 @@ export default class ImageBuilder {
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
             console.log("outStream = " + outStream);
             console.log("Checked Microsoft.VirtualMachineImages provider registration");
-            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
+            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                 await this.executeAzCliCommand("provider register -n Microsoft.VirtualMachineImages");
                 this.sleepFor(1);
                 outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
-                while (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).properties.state, "Registered")) {
+                while (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
                     outStream = await this.executeAzCliCommand(`provider show -n Microsoft.VirtualMachineImages`);
                 }
             }
