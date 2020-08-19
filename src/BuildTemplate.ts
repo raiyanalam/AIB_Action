@@ -50,7 +50,9 @@ export default class BuildTemplate {
     constructor(resourceAuthorizer: IAuthorizer, taskParameters: TaskParameters) {
         try {
             this._taskParameters = taskParameters;
+            console.log("Reached here");
             this._client = new AzureRestClient(resourceAuthorizer);
+            console.log("Did not reach here");
         }
         catch (error) {
             throw Error(error);
