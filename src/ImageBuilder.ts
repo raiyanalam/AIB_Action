@@ -177,10 +177,11 @@ export default class ImageBuilder {
                         "/subscriptions/${subscriptionId}/resourceGroups/${this._taskParameters.resourceGroupName}"
                     ]
                   }`;
-
+            console.log("creating role definition");
             var templateJsonRoleDefinition = JSON.parse(templateRoleDefinition);
             fs.writeFileSync('./src/template.json', JSON.stringify(templateJsonRoleDefinition));
-
+            console.log(imageRoleDefName +"  imageRoleDefName    "+JSON.stringify(templateJsonRoleDefinition));
+            
             //create image role defintion 
             await this.executeAzCliCommand(`role definition create --role-definition ./src/template.json`);
             console.log("role definition " + imageRoleDefName + " got created");
