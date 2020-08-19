@@ -56,7 +56,9 @@ export default class ImageBuilder {
         var imgBuilderTemplateExists: boolean = false;
         var accountkeys: string = "";
         try {
+            console.log("Attempting to check Az cli path");
             azPath = await io.which("az", true);
+            console.log("Az path = " + azPath);
             var outStream = '';
             await this.executeAzCliCommand("--version");
             //Register all features for Azure Image Builder Service

@@ -13,6 +13,7 @@ export default class ImageBuilderClient {
 
     constructor(resourceAuthorizer: IAuthorizer, taskParameters: TaskParameters) {
         this._client = new AzureRestClient(resourceAuthorizer);
+        console.log("Reached in Azure Image Builder Client constructor");
         this._taskParameters = taskParameters;
     }
 
