@@ -122,16 +122,21 @@ export default class ImageBuilder {
 
             console.log("Attempting to check Microsoft.KeyVault provider registration");
             outStream = await this.executeAzCliCommand(`provider show -n Microsoft.KeyVault`);
+            console.log("outStream = " + outStream);
             console.log("Checked Microsoft.KeyVault provider registration");
-            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
+            if (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).registrationState, "Registered")) {
+                console.log("First check for registration failed");    
                 console.log("Register Microsoft.KeyVault");
                 await this.executeAzCliCommand("provider register -n Microsoft.KeyVault");
                 this.sleepFor(1);
                 outStream = await this.executeAzCliCommand(`provider show -n Microsoft.KeyVault`);
-                while (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(`${outStream}`).registrationState, "Registered")) {
+                while (JSON.parse(`${outStream}`) && !Utils.IsEqual(JSON.parse(outStream).registrationState, "Registered")) {
                     outStream = await this.executeAzCliCommand(`provider show -n Microsoft.KeyVault`);
+                    this.sleepFor(1);
                 }
             }
+
+            console.log("Checked all registrations");
 
             this.sleepFor(3);
 
