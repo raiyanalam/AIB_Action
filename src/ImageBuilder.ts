@@ -142,6 +142,8 @@ export default class ImageBuilder {
 
             //GENERAL INPUTS
             outStream = await this.executeAzCliCommand("account show");
+            console.log("account show outstream = " + outStream);
+            console.log("ran account show");
             var subscriptionId = JSON.parse(`${outStream}`).id.toString();
 
             if (this._taskParameters.resourceGroupName == null || this._taskParameters.resourceGroupName == undefined || this._taskParameters.resourceGroupName.length == 0) {
