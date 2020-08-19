@@ -142,6 +142,7 @@ export default class ImageBuilder {
             if (this._taskParameters.resourceGroupName == null || this._taskParameters.resourceGroupName == undefined || this._taskParameters.resourceGroupName.length == 0) {
                 var resourceGroupName = Util.format('%s%s', constants.resourceGroupName, getCurrentTime());
                 this._taskParameters.resourceGroupName = resourceGroupName;
+                console.log("Trying to create a new resource group: " + resourceGroupName);
                 await this.executeAzCliCommand(`group create -n ${resourceGroupName} -l ${this._taskParameters.location}`);
                 console.log("resource group " + resourceGroupName + " got created");
             }
