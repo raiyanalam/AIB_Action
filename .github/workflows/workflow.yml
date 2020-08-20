@@ -44,7 +44,7 @@ jobs:
       with:
         creds: ${{secrets.AZURE_CREDENTIALS}}
         
-    # uses action is for AIB to create image
+    # uses action is for AIB to create image 
     - name: aib action
       id: aib
       uses: ./
