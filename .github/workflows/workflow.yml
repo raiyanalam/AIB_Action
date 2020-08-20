@@ -49,7 +49,7 @@ jobs:
       id: aib
       uses: ./
       with:
-        location: 'westus'
+        location: 'easttus'
         #resourceGroupName: 'rai-aibrg'
         #resourceGroupName: 'aibResourceGroupLin'
         #resourceGroupName: 'aibResourceGroupMG'
@@ -68,6 +68,6 @@ jobs:
         #distResourceId: '/subscriptions/f9b6b78c-2720-4293-9fc7-2c38fcebb2c6/resourceGroups/aibResourceGroupLin/providers/Microsoft.Compute/galleries/sharedImageGalleryLin/images/imgdefnlin'
         #distResourceId: '/subscriptions/c00d16c7-6c1f-4c03-9be1-6934a4c49682/resourceGroups/aibResourceGroupMG/providers/Microsoft.Compute/images/aibManagedImage'
         #distResourceId: '/subscriptions/f9b6b78c-2720-4293-9fc7-2c38fcebb2c6/resourceGroups/aibResourceGroupMG/providers/Microsoft.Compute/images/aibManagedImage'
-        distLocation: 'westus' 
+        distLocation: 'eastus' 
     - name: print aib output
       run: echo output from aib ${{ steps.aib.outputs.imagebuilderRunStatus }} ${{ steps.aib.outputs.runOutputName }} ${{ steps.aib.outputs.customImageURI }}
