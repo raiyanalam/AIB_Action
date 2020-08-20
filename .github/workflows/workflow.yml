@@ -50,7 +50,7 @@ jobs:
       uses: ./
       with:
         location: 'eastus'
-        resourceGroupName: 'rai-aibrg'
+        #resourceGroupName: 'rai-aibrg'
         #resourceGroupName: 'aibResourceGroupLin'
         #resourceGroupName: 'aibResourceGroupMG'
         #resourceGroupName: 'rg_aib_action_1597591645408'
